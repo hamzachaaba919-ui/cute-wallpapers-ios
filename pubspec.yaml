@@ -1,0 +1,58 @@
+name: cute_wallpapers
+description: "Cute Wallpapers — a premium, fully offline wallpaper application."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.11.0 <4.0.0'
+  flutter: ">=3.41.6"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Icons
+  cupertino_icons: ^1.0.9
+
+  # Typography
+  google_fonts: ^8.1.0
+
+  # State management
+  provider: ^6.1.5+1
+
+  # Navigation
+  go_router: ^17.2.3
+
+  # Full-screen pinch-to-zoom wallpaper viewer
+  photo_view: ^0.15.0
+
+  # Local storage / persistence (favorites, theme, recent searches — all offline)
+  shared_preferences: ^2.5.5
+
+  # Layout — masonry wallpaper grid
+  flutter_staggered_grid_view: ^0.7.0
+
+  # UX / feedback
+  shimmer: ^3.0.0
+  flutter_animate: ^4.5.2
+
+  # On-device actions: save wallpaper to Photos, share, app version.
+  # (No "set wallpaper" package here — iOS has no public API for an app to
+  # set the home/lock screen wallpaper directly, so this build only ever
+  # saves to Photos and lets the person finish up from there.)
+  gal: ^2.3.2
+  share_plus: ^13.1.0
+  url_launcher: ^6.3.2
+  package_info_plus: ^10.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/data/wallpapers.json
+    - assets/images/wallpapers/
