@@ -1,7 +1,7 @@
 name: cute_wallpapers
 description: "Cute Wallpapers — a premium, fully offline wallpaper application."
 publish_to: 'none'
-version: 1.0.0+4
+version: 1.0.0+5
 
 environment:
   sdk: '>=3.11.0 <4.0.0'
@@ -40,7 +40,13 @@ dependencies:
   # (No "set wallpaper" package here — iOS has no public API for an app to
   # set the home/lock screen wallpaper directly, so this build only ever
   # saves to Photos and lets the person finish up from there.)
-  gal: ^2.3.2
+  #
+  # TEMPORARY DIAGNOSTIC BUILD: gal is removed to binary-isolate the
+  # TestFlight launch crash. This drops gal's native iOS code from the
+  # build entirely (no Pod, no plugin registration). Restore this line
+  # once the crash cause is confirmed. See wallpaper_actions_service.dart
+  # for the matching stub.
+  # gal: ^2.3.2
   share_plus: ^13.1.0
   url_launcher: ^6.3.2
   package_info_plus: ^10.2.1
