@@ -64,5 +64,7 @@
 	-->
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Cute Wallpapers saves the wallpaper you choose to your Photos library so you can set it from the Photos app.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs access to your photo library so you can save wallpapers to your device.</string>
 </dict>
 </plist>
