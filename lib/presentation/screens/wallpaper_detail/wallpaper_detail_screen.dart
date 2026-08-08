@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_dimensions.dart';
@@ -67,8 +70,13 @@ class _WallpaperDetailScreenState extends State<WallpaperDetailScreen> {
     if (_isSaving) return;
     setState(() => _isSaving = true);
     try {
-      await _actions.saveToGallery(_current);
-      if (mounted) await _showSavedDialog();
+      final SaveWallpaperResult result = await _actions.saveToGallery(_current);
+      if (!mounted) return;
+      if (result == SaveWallpaperResult.success) {
+        await _showSavedDialog();
+      } else {
+        await _showPermissionDeniedDialog();
+      }
     } catch (_) {
       if (mounted) context.showSnack('Something went wrong. Please try again.');
     }
@@ -85,13 +93,48 @@ class _WallpaperDetailScreenState extends State<WallpaperDetailScreen> {
         title: const Text('Wallpaper saved successfully'),
         content: const Padding(
           padding: EdgeInsets.only(top: 8),
-          child: Text("Open the Photos app and choose 'Use as Wallpaper' to apply it."),
+          child: Text('Open Photos → Share → Use as Wallpaper.'),
         ),
         actions: [
           CupertinoDialogAction(
             isDefaultAction: true,
             onPressed: () => Navigator.of(context).pop(),
             child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Shown when the person has declined (or previously declined) the
+  /// add-photos permission prompt, explaining why the app needs it and
+  /// offering a direct route to the Settings toggle rather than leaving
+  /// them stuck.
+  Future<void> _showPermissionDeniedDialog() {
+    return showCupertinoDialog<void>(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        title: const Text('Photos Access Needed'),
+        content: const Padding(
+          padding: EdgeInsets.only(top: 8),
+          child: Text(
+            'Cute Wallpapers needs permission to add photos to your library '
+            "so it can save this wallpaper. You can allow this in Settings → "
+            'Cute Wallpapers → Photos.',
+          ),
+        ),
+        actions: [
+          CupertinoDialogAction(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Not Now'),
+          ),
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            onPressed: () {
+              Navigator.of(context).pop();
+              unawaited(launchUrl(Uri.parse('app-settings:')));
+            },
+            child: const Text('Open Settings'),
           ),
         ],
       ),

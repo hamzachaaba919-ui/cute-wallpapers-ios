@@ -39,14 +39,10 @@ dependencies:
   # On-device actions: save wallpaper to Photos, share, app version.
   # (No "set wallpaper" package here — iOS has no public API for an app to
   # set the home/lock screen wallpaper directly, so this build only ever
-  # saves to Photos and lets the person finish up from there.)
-  #
-  # TEMPORARY DIAGNOSTIC BUILD: gal is removed to binary-isolate the
-  # TestFlight launch crash. This drops gal's native iOS code from the
-  # build entirely (no Pod, no plugin registration). Restore this line
-  # once the crash cause is confirmed. See wallpaper_actions_service.dart
-  # for the matching stub.
-  # gal: ^2.3.2
+  # saves to Photos and lets the person finish up from there. Same package
+  # is used on Android to save to the gallery, so this behavior — and the
+  # underlying save mechanism — is unchanged there.)
+  gal: ^2.3.2
   share_plus: ^13.1.0
   url_launcher: ^6.3.2
   package_info_plus: ^10.2.1
@@ -58,6 +54,25 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  # ios/Runner.xcodeproj has no Swift Package Manager integration (no
+  # XCLocalSwiftPackageReference / FlutterGeneratedPluginSwiftPackage
+  # dependency wired into the Runner target — verified by inspecting
+  # project.pbxproj). Once every remaining iOS plugin supports SPM
+  # (package_info_plus, share_plus, shared_preferences_foundation,
+  # url_launcher_ios all ship a Package.swift), `flutter pub get` marks
+  # swift_package_manager_enabled=true for iOS in
+  # .flutter-plugins-dependencies. CocoaPods' podhelper.rb then skips
+  # installing those plugins as Pods (expecting Xcode to supply them via
+  # SPM instead), but the Xcode project was never migrated to add that
+  # SPM dependency — so the plugin modules exist nowhere, and
+  # GeneratedPluginRegistrant.m's `@import package_info_plus;` fails to
+  # resolve. Pinning this project to CocoaPods-only plugin resolution
+  # keeps it consistent with the actual (unmigrated) Xcode project.
+  # Remove this once Runner.xcodeproj has been migrated to Swift Package
+  # Manager (see https://docs.flutter.dev/to/add-swift-package-manager-manually).
+  config:
+    enable-swift-package-manager: false
 
   assets:
     - assets/data/wallpapers.json

@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -22,12 +24,43 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Cute Wallpapers saves the wallpaper you choose to your Photos library so you can set it from the Photos app.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs access to your photo library so you can save wallpapers to your device.</string>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+		<key>UISceneConfigurations</key>
+		<dict>
+			<key>UIWindowSceneSessionRoleApplication</key>
+			<array>
+				<dict>
+					<key>UISceneClassName</key>
+					<string>UIWindowScene</string>
+					<key>UISceneConfigurationName</key>
+					<string>flutter</string>
+					<key>UISceneDelegateClassName</key>
+					<string>FlutterSceneDelegate</string>
+					<key>UISceneStoryboardFile</key>
+					<string>Main</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>UIStatusBarHidden</key>
+	<false/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -38,33 +71,7 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
-	<key>UIStatusBarHidden</key>
-	<false/>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
-	<!--
-	  This app never encrypts data beyond what iOS provides for free
-	  (HTTPS/standard OS-level protections). Declaring this avoids the
-	  "Export Compliance" question in App Store Connect for every build.
-	-->
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
-	<!--
-	  "Save Wallpaper" writes the chosen image into the user's Photos
-	  library via PHPhotoLibrary (the "gal" plugin). This is an add-only
-	  request — the app only ever adds images, it never reads or browses
-	  the existing library — so only the "Add Photos Only" permission key
-	  is needed. This string is shown verbatim in the iOS permission
-	  prompt, per App Store Review Guideline 5.1.1 (Data Collection and
-	  Storage: purpose strings must clearly explain the use).
-	-->
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Cute Wallpapers saves the wallpaper you choose to your Photos library so you can set it from the Photos app.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app needs access to your photo library so you can save wallpapers to your device.</string>
 </dict>
 </plist>
